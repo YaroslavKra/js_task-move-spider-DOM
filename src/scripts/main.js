@@ -1,5 +1,3 @@
-'use strict';
-
 const wall = document.querySelector('.wall');
 const spider = document.querySelector('.spider');
 
@@ -9,8 +7,9 @@ wall.addEventListener('click', (e) => {
   const spiderWidth = spider.offsetWidth;
   const spiderHeight = spider.offsetHeight;
 
-  let x = e.clientX - wallRect.left - spiderWidth / 2;
-  let y = e.clientY - wallRect.top - spiderHeight / 2;
+  // wall.clientLeft/clientTop = ширина border стены (10px)
+  let x = e.clientX - wallRect.left - wall.clientLeft - spiderWidth / 2;
+  let y = e.clientY - wallRect.top - wall.clientTop - spiderHeight / 2;
 
   if (x < 0) {
     x = 0;
@@ -20,12 +19,13 @@ wall.addEventListener('click', (e) => {
     y = 0;
   }
 
-  if (x + spiderWidth > wallRect.width) {
-    x = wallRect.width - spiderWidth;
+  // wall.clientWidth/clientHeight = 400px (без border)
+  if (x + spiderWidth > wall.clientWidth) {
+    x = wall.clientWidth - spiderWidth;
   }
 
-  if (y + spiderHeight > wallRect.height) {
-    y = wallRect.height - spiderHeight;
+  if (y + spiderHeight > wall.clientHeight) {
+    y = wall.clientHeight - spiderHeight;
   }
 
   spider.style.left = `${x}px`;
